@@ -7,8 +7,8 @@ include ..\MakeVariables_3
 CXXFLAGS = -O3 -Wall
 CFLAGS = -O3
 
-LFLAGS = -LC:\mingw64\lib -lpthreadGC2_x64
-IFLAGS = -IC:\mingw64\include
+LFLAGS = -L$(MINGW_PATH)\x86_64-w64-mingw32\lib -lwinpthread-1
+IFLAGS = -I$(MINGW_PATH)\x86_64-w64-mingw32\include
 
 Library = libcatsim64.dll
 
@@ -32,7 +32,7 @@ clean:
 	@echo . Cleaning ...
 	@echo .
 	@echo .
-	rm -f *.o
+	del *.o
 	@echo .
 	@echo .
 	@echo . Done cleaning.
