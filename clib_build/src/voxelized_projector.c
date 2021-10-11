@@ -24,8 +24,7 @@
 #include <pthread.h>
 #include <unistd.h>
 #endif
-#include "DD3_roi_notrans_mm.hpp"
-#include <iostream>
+#include "DD3_roi_notrans_mm.h"
 #include "getMemorySize.h"
 
 // #define DEBUG
@@ -94,8 +93,8 @@ void Report(int Unused)
   if (PrintReportOutput)
     {
     sprintf(TempString, "in C> %s", OutputString);
-    std::cout << TempString;
-    std::cout.flush();
+        fprintf(stdout, "%s", TempString);
+        fflush(stdout);
     }
   }
 
@@ -135,7 +134,9 @@ float* my_memcpyf(float *src, float *dest, int bytes)
   return dest;
   }
 
+#ifdef __cplusplus
 extern "C" {
+#endif
 DLLEXPORT void set_src_info_vox(float *sourceWeights, int nSubSources)
   {
   #if defined(DEBUG_00)
@@ -145,9 +146,7 @@ DLLEXPORT void set_src_info_vox(float *sourceWeights, int nSubSources)
   modules.sourceWeights = my_memcpyf(sourceWeights, modules.sourceWeights, nSubSources*sizeof(float));
   modules.nSubSources = nSubSources;
   }
-}
 
-extern "C" {
 DLLEXPORT void set_module_info_vox(float *Height, float *Width, int *Pix, float *Coords, int *Sub, float *Sampling, float *Weight, int nModuleTypes, int maxPix, int maxSubDets, int moduleOverlapType)
   {
   int i;
@@ -173,9 +172,7 @@ DLLEXPORT void set_module_info_vox(float *Height, float *Width, int *Pix, float 
   modules.moduleOverlapType = moduleOverlapType;
   modules.nModuleTypes = nModuleTypes;
   }
-}
 
-extern "C" {
 DLLEXPORT void set_material_info_vox(int materialCount, int eBinCount, float *muTable)
   {
   #if defined(DEBUG_00)
@@ -186,9 +183,7 @@ DLLEXPORT void set_material_info_vox(int materialCount, int eBinCount, float *mu
   materials.eBinCount = eBinCount;
   materials.muTable = my_memcpyf(muTable, materials.muTable, eBinCount*materialCount*sizeof(float));
   }
-}
 
-extern "C" {
 DLLEXPORT void set_phantom_info_vox(int *Status, float *vol, int *dims, float xoff, float yoff, float zoff, float dxy, float dz, unsigned char *xy_mask, int MaterialIndex, int NumOfMaterials)
   {
   static unsigned long previously_allocated_memory_size;
@@ -265,7 +260,9 @@ DLLEXPORT void set_phantom_info_vox(int *Status, float *vol, int *dims, float xo
 	if(MaterialIndex==NumOfMaterials)
 		Report(sprintf(OutputString, "Allocated a total of %6lu MB.\n", previously_allocated_memory_size/((unsigned long)(1024*1024))));
   }
+#ifdef __cplusplus
 }
+#endif
 
 int convert_modular_detector(float **xds, float **yds, float **zds, int *nrdetcols, int *nrdetrows, int nModulesIn, int *modTypeInds, float *Up, float *Right, float *Center)
   {
@@ -400,9 +397,9 @@ int convert_modular_detector(float **xds, float **yds, float **zds, int *nrdetco
   Report(sprintf(OutputString, "*nrdetcols = %i, *nrdetrows = %i\n", *nrdetcols, *nrdetrows));
   #endif
 
-  *xds = new float[*nrdetcols];
-  *yds = new float[*nrdetcols];
-  *zds = new float[*nrdetrows];
+  *xds = (float*)malloc(sizeof(float) * (*nrdetcols));
+  *yds = (float*)malloc(sizeof(float) * (*nrdetcols));
+  *zds = (float*)malloc(sizeof(float) * (*nrdetrows));
 
   // initial verifications complete... carry on
   // we also verify here that all modules have the same z locations for the rows.
@@ -465,7 +462,9 @@ int convert_modular_detector(float **xds, float **yds, float **zds, int *nrdetco
   return(0);
   }
 
+#ifdef __cplusplus
 extern "C" {
+#endif
 DLLEXPORT 
 void voxelized_projector(
 			int *Status,                    // Output: scalar. 0=normal, 1=Detector definition error
@@ -520,7 +519,7 @@ void voxelized_projector(
     return;
     }
       
-  float *thisViewProj = new float[nrdetcols*nrdetrows];
+  float* thisViewProj = (float*)malloc(sizeof(float) * nrdetcols * nrdetrows);
 
   dbug(1,"xds[e]: %f\n\r\n",xds[100]);
   dbug(1,"materials.muTable[0]: %f\r\n",materials.muTable[0]);
@@ -552,10 +551,10 @@ void voxelized_projector(
   Report(sprintf(OutputString, "Returning from voxelized_projector\n"));
   #endif
 
-  delete thisViewProj;
-  delete xds;  // xds, yds, zds are newed in calling convert_modular_detector
-  delete yds;
-  delete zds;
+  free(thisViewProj);
+  free(xds);  // xds, yds, zds are newed in calling convert_modular_detector
+  free(yds);
+  free(zds);
   
 	// Free phantom memory
 	if(freeTheMemory==1) {
@@ -580,7 +579,9 @@ void voxelized_projector(
 		phantom.xy_mask = NULL;
 	}
   }
+#ifdef __cplusplus
 }
+#endif
 
 
 

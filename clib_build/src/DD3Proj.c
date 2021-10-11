@@ -365,7 +365,9 @@ void DD3Boundaries(int nrBoundaries,
 /*
  * DD3 projector
  */
+#ifdef __cplusplus
 extern "C"{
+#endif
 
 DLLEXPORT void DD3Proj(float x0,
 	     float y0,
@@ -514,6 +516,8 @@ DLLEXPORT void DD3Proj(float x0,
   free(detZshift);
 }
 
+#ifdef __cplusplus
 }
+#endif
 
 

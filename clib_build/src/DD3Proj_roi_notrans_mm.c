@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "DD3_roi_notrans_mm.hpp"
+#include "DD3_roi_notrans_mm.h"
 
 //Version 1.0 ,  mask, and no trans
 void DD3ProjRow_roi_notrans_mm(float imgX,
@@ -53,14 +53,14 @@ void DD3ProjRow_roi_notrans_mm(float imgX,
 	//X end boundary check
 	if(detX_end<(imgXStart+(nrcols-1)*imgXstep))
 	{
-		end_imgX_ind=int((detX_end-imgXStart)*inv_imgXstep)+2; //extra 1 to avoid precision error
+		end_imgX_ind=(int)((detX_end-imgXStart)*inv_imgXstep)+2; //extra 1 to avoid precision error
 		end_imgX_ind=MIN_(end_imgX_ind,nrcols);
 	}
 
 	//X start boundary check
 	if(detX_0>previousX)
 	{
-		start_imgX_ind=int((detX_0-imgXStart)*inv_imgXstep-1); //extra 1 to avoid precision error
+		start_imgX_ind=(int)((detX_0-imgXStart)*inv_imgXstep-1); //extra 1 to avoid precision error
 		if(start_imgX_ind>0)
 		{
 			pImg+=start_imgX_ind*nrplanes*trans_rowstep;
@@ -134,14 +134,14 @@ void DD3ProjRow_roi_notrans_mm(float imgX,
 			//Z end boundary check
 			if(enddetZ<imgZ_end)
 			{
-				end_imgZ_ind=int((z0+scale*detZ[nrdetrows]-imgZstart)*inv_imgZstep)+2; //extra 1 to avoid precision error
+				end_imgZ_ind=(int)((z0+scale*detZ[nrdetrows]-imgZstart)*inv_imgZstep)+2; //extra 1 to avoid precision error
 				end_imgZ_ind=MIN_(end_imgZ_ind,nrplanes);	
 			}
 
 			//Z start boundary check
 			if(nextdetZ>previousZ )
 			{
-				start_imgZ_ind=int((nextdetZ-imgZstart)*inv_imgZstep)-1; //extra 1 to avoid precision error
+				start_imgZ_ind=(int)((nextdetZ-imgZstart)*inv_imgZstep)-1; //extra 1 to avoid precision error
 				if(start_imgZ_ind>0)
 				{
 					pImgcopy+=start_imgZ_ind;
@@ -375,7 +375,9 @@ void DD3ProjView_roi_notrans_mm(float x0,
 /*
 * DD3 projector
 */
+#ifdef __cplusplus
 extern "C"{
+#endif
 
 	void DD3Proj_roi_notrans_mm(float x0,
 		float y0,
@@ -533,7 +535,9 @@ extern "C"{
 		free(scales);
 	}
 
+#ifdef __cplusplus
 }
+#endif
 
 
 

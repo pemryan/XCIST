@@ -319,8 +319,9 @@ void DD3BackView_mm(float x0,
 /*
  * DD3 projector
  */
+#ifdef __cplusplus
 extern "C"{
-
+#endif
 	void DD3Proj(float x0,
 	     float y0,
 	     float z0,
@@ -417,7 +418,9 @@ void DD3Back(float x0,
 	     float *pOrig);
 
 
+#ifdef __cplusplus
 }
+#endif
 
 #endif
 

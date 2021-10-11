@@ -153,7 +153,7 @@ typedef struct
 } DD3GeoBuff; //Buffer to modify
 
 
-void DD3SetBuff(DD3ScanGeo &ScanGeo, DD3ImgGeo &ImgGeo, DD3GeoBuff &GeoBuff);
+void DD3SetBuff(DD3ScanGeo* ScanGeo, DD3ImgGeo* ImgGeo, DD3GeoBuff* GeoBuff);
 void DD3Proj_struct_kernel(DD3ScanGeo ScanGeo, DD3ImgGeo ImgGeo, DD3GeoBuff GeoBuff,
 						   float* sinogram,float* img);
 
@@ -166,7 +166,9 @@ void DD3FreeBuff(DD3GeoBuff GeoBuf);
 /*
 * DD3 projector and backprojector
 */
+#ifdef __cplusplus
 extern "C"{
+#endif
 
 	void DD3Proj_roi_notrans_mm(float x0,
 		float y0,
@@ -265,7 +267,9 @@ extern "C"{
 		float vox_z_size,//added fields 
 		byte* xy_mask); //added fields for xy_mask
 	//////////////////////////////////////////////////////////////////////////	
+#ifdef __cplusplus
 }
+#endif
 
 #endif
 
