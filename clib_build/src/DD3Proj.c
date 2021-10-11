@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "DD3.hpp"
+#include "DD3.h"
 
 /*
  * DD3 row projector
