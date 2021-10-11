@@ -15,4 +15,8 @@ spline.c \
 xybowtie.c \
 DD2ParProj.c \
 analytic_projector.c \
-rndpoi.c
+rndpoi.c \
+DD3Proj.c \
+DD3Proj_roi_notrans_mm.c \
+voxelized_projector.c \
+getMemorySize.c

@@ -13,11 +13,7 @@ CrossSectionHandler.cpp \
 Volume.cpp \
 Detector.cpp \
 CrossSection.cpp \
-Phantom.cpp \
-DD3Proj.cpp \
-DD3Proj_roi_notrans_mm.cpp \
-voxelized_projector.cpp \
-getMemorySize.cpp
+Phantom.cpp
 
 OBJECTS = $(patsubst %.cpp,%.o,$(CPPSOURCES))
 OBJECTS += $(patsubst %.c,%.o,$(CSOURCES))
