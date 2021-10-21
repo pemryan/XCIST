@@ -186,11 +186,11 @@ DLLEXPORT void set_material_info_vox(int materialCount, int eBinCount, float *mu
 
 DLLEXPORT void set_phantom_info_vox(int *Status, float *vol, int *dims, float xoff, float yoff, float zoff, float dxy, float dz, unsigned char *xy_mask, int MaterialIndex, int NumOfMaterials)
   {
-  static unsigned long previously_allocated_memory_size;
-  static unsigned long system_memory_size;
-  unsigned long phantom_num_voxels_this_material  = (unsigned long)dims[0]*(unsigned long)dims[1]*(unsigned long)dims[2];
-  unsigned long required_memory_size_this_material  = phantom_num_voxels_this_material *(unsigned long)sizeof(float);
-  unsigned long reserved_memory_size = (unsigned long)2*(unsigned long)1024*(unsigned long)1024*(unsigned long)1024; // reserve 2GB memory to store sinogram and other things;
+  static uint64_t previously_allocated_memory_size;
+  static uint64_t system_memory_size;
+  uint64_t phantom_num_voxels_this_material  = (uint64_t)dims[0]*(uint64_t)dims[1]*(uint64_t)dims[2];
+  uint64_t required_memory_size_this_material  = phantom_num_voxels_this_material *(uint64_t)sizeof(float);
+  uint64_t reserved_memory_size = (uint64_t)2*(uint64_t)1024*(uint64_t)1024*(uint64_t)1024; // reserve 2GB memory to store sinogram and other things;
 
 	*Status = 0;
 	
@@ -258,7 +258,7 @@ DLLEXPORT void set_phantom_info_vox(int *Status, float *vol, int *dims, float xo
 	#endif
 	
 	if(MaterialIndex==NumOfMaterials)
-		Report(sprintf(OutputString, "Allocated a total of %6lu MB.\n", previously_allocated_memory_size/((unsigned long)(1024*1024))));
+		Report(sprintf(OutputString, "Allocated a total of %6lu MB.\n", previously_allocated_memory_size/((uint64_t)(1024*1024))));
   }
 #ifdef __cplusplus
 }
