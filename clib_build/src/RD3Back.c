@@ -2,9 +2,19 @@
 
 #include <math.h> // fabs(), sqrt(), sin(), cos()
 #include <stdlib.h> // malloc(), free()
-#include "RD3.hpp" //RD3BackView
 
 //-----------------------------------------------------------------------------
+int RD3Intersections(float x0,
+		     float y0,
+		     float deltax,
+		     float deltay,
+		     int nrcols,
+		     int nrrows,
+		     int* pStartRow,
+		     int* pStopRow,
+		     float* pIntersection,
+		     float* pRico);
+
 
 /*
  * RD3 backprojector for 1 detector column
