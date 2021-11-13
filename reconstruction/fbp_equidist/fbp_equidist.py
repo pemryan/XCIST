@@ -12,20 +12,20 @@ PtrPtrDOUBLE = ct.POINTER(PtrDOUBLE)
 
 class TestStruct(ct.Structure):
     _fields_ = [
-                ("ScanR", ct.c_double),
-                ("DecLength", ct.c_double),
-                ("YL", ct.c_int),
-                ("AngleNumber", ct.c_int),
-                ("DistD", ct.c_double),
-                ("Radius", ct.c_double),
-                ("RecSize", ct.c_int),
-                ("centerX", ct.c_int),
-                ("centerY", ct.c_int),
-                ("FOILength", ct.c_int),
-                ("FOIWidth", ct.c_int),
-                ("GF", PtrPtrDOUBLE),
-                ("RecIm", PtrPtrDOUBLE)
-                ]
+        ("ScanR", ct.c_double),
+        ("DecLength", ct.c_double),
+        ("YL", ct.c_int),
+        ("AngleNumber", ct.c_int),
+        ("DistD", ct.c_double),
+        ("Radius", ct.c_double),
+        ("RecSize", ct.c_int),
+        ("centerX", ct.c_int),
+        ("centerY", ct.c_int),
+        ("FOILength", ct.c_int),
+        ("FOIWidth", ct.c_int),
+        ("GF", PtrPtrDOUBLE),
+        ("RecIm", PtrPtrDOUBLE),
+    ]
 
 
 def double2darray2pointer(array):
@@ -59,18 +59,18 @@ recon.fbp.argtypes = [ct.POINTER(TestStruct)]
 recon.fbp.restype = None
 
 # Load the data
-dataFile = './data/Res_Filtering_Dist.mat'
+dataFile = "./data/Res_Filtering_Dist.mat"
 data = scio.loadmat(dataFile)
 
 # init the struct
 t = TestStruct()
 
-t.ScanR = data['ScanR']
-t.DecLength = data['DecLength']
-t.YL = data['YL']
-t.AngleNumber = len(data['GF'])
-t.DistD = data['DistD']
-t.Radius = data['Radius']
+t.ScanR = data["ScanR"]
+t.DecLength = data["DecLength"]
+t.YL = data["YL"]
+t.AngleNumber = len(data["GF"])
+t.DistD = data["DistD"]
+t.Radius = data["Radius"]
 
 # These are flexible parameters.
 t.RecSize = 256
@@ -80,7 +80,7 @@ t.FOILength = 256
 t.FOIWidth = 256
 
 # Generate a 2D ctypes array from numpy array
-GF = data['GF']
+GF = data["GF"]
 GF = GF.T
 GF_ptr = double2darray2pointer(GF)
 t.GF = GF_ptr
@@ -95,12 +95,14 @@ recon.fbp(ct.byref(t))
 # Convert ctypes 2D arrays to numpy arrays
 RecA = double2dpointer2array(RecIm_ptr, *RecIm.shape)
 
-dataNew = './data/fbp_equidistant_RecImage.mat'
-scio.savemat(dataNew,
-             {
-                 'Rec': RecA,
-             },)
+dataNew = "./data/fbp_equidistant_RecImage.mat"
+scio.savemat(
+    dataNew,
+    {
+        "Rec": RecA,
+    },
+)
 
 plt.figure()
-plt.imshow(RecA, cmap='gray', vmin=0.95, vmax=1.05)
+plt.imshow(RecA, cmap="gray", vmin=0.95, vmax=1.05)
 plt.show()
