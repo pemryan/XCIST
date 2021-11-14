@@ -63,7 +63,7 @@ def DD3Proj_roi_notrans_mm(
         ndpointer(c_float),
         c_float,
         c_float,
-        ndpointer(c_float),
+        ndpointer(c_uint8),
     ]
     fun.restype = None
 
