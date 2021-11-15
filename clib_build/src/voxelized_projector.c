@@ -517,10 +517,6 @@ int convert_modular_detector(float** xds,
     Report(sprintf(OutputString, "Returning from convert_modular_detector\n"));
 #endif
 
-    free(xds);
-    free(yds);
-    free(zds);
-
     return (0);
 }
 
