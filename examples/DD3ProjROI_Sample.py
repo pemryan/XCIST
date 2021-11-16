@@ -17,8 +17,8 @@ yds = -400 * np.ones(nrdetcols, dtype=np.single)
 zds = np.linspace(-nrdetrows / 2 + 0.5, nrdetrows / 2 - 0.5, nrdetrows, dtype=np.single)
 
 # original image and view settings
-dx = 0.5
-dz = 0.5
+dx = 1
+dz = 1
 imgXoffset = 0
 imgYoffset = 0
 imgZoffset = 0
