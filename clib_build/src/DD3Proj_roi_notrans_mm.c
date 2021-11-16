@@ -7,6 +7,12 @@
 
 #include "DD3_roi_notrans_mm.h"
 
+#ifdef WIN32
+#define DLLEXPORT __declspec(dllexport)
+#else
+#define DLLEXPORT
+#endif
+
 //Version 1.0 ,  mask, and no trans
 void DD3ProjRow_roi_notrans_mm(float imgX,
 							float imgXstep,
@@ -379,7 +385,7 @@ void DD3ProjView_roi_notrans_mm(float x0,
 extern "C"{
 #endif
 
-	void DD3Proj_roi_notrans_mm(float x0,
+DLLEXPORT void DD3Proj_roi_notrans_mm(float x0,
 		float y0,
                                     float z0,  //first src loc in absolute coords
 		int nrdetcols,
